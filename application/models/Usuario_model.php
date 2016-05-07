@@ -7,7 +7,7 @@
 		}
 
 
-		public function get_usuarios () {
+		public function get_usuarios ($nMejores) {
 			
 		}
 		
@@ -18,8 +18,8 @@
 		public function get_canciones ($id) {
 		}
 		
-		public function get_mejoresPuntajes ($n) {
-		}
+		public function get_juegos ($id) {
+		}		
 	}
 
 ?>
