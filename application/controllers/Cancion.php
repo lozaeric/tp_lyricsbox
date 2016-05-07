@@ -32,5 +32,9 @@ class Cancion extends CI_Controller {
             show_404();
         $this->load->view('cancion/index', $data);
 	}
+	
+	public function guardar ()  //guarda una nueva cancion subida por un usuario
+    {
+	}
 }
 ?>

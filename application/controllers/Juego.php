@@ -9,11 +9,11 @@ class Juego extends CI_Controller {
 		force_ssl ();
 	}
 	
-	public function index() // trae un juego nuevo
+	public function index() // devuelve un juego nuevo random (se puede filtrar por artista, año y tag)
 	{
 	}
 	
-	public function subir ($id) { //permite subir el juego id?
+	public function guardar () { //permite subir un juego ya terminado 
 		
 	}
 }
