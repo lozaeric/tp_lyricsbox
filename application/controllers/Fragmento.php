@@ -13,3 +13,4 @@ class Fragmento extends CI_Controller {
 	{
 	}
 }
+?>

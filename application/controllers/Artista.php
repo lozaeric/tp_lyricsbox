@@ -11,10 +11,10 @@ class Artista extends CI_Controller {
 	
 	public function index() //muestra la lista de todos los artistas y sus canciones
 	{
-		
 	}
 	
 	public function ver ($id) { //permite ver la lista de cancione de un artista
 		
 	}
 }
+?>
