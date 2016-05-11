@@ -12,7 +12,10 @@
 		}
 		
 		public function guardar ($idUsuario, $idFragmento, $tiempo, $dificultad, $puntaje) {
-			
+			$data = array ("codigo_usuario"=>$idUsuario, "codigo_fragmento"=>$idFragmento, "tiempo"=>$tiempo, "dificultad"=>$dificultad, "puntaje"=>$puntaje);
+			$this->db->insert('juego', $data);
+			$query = $this->db->get_where ('jugador', $data);
+			return $query->row_array ();
 		}
 	}
 
