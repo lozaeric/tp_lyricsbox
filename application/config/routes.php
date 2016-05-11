@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-// $route['usuarios']['get'] = 'usuario';
+$route['usuarios']['get'] = 'usuario';
 // $route['usuarios/(:num)']['get'] = 'usuario/ver/$1';
 // $route['usuarios/(:num)/canciones']['get'] = 'usuario/verCanciones/$1';
 // $route['usuarios/(:num)/juegos']['get'] = 'usuario/verJuegos/$1';

@@ -7,12 +7,12 @@
 		}
 
 
-		public function get_usuarios ($nMejores) {
-			
+		public function get_usuarios ($nMejores=10) {
+            $datos = $this->db->get('USUARIO')->result_array();
+            return $datos;
 		}
 		
 		public function get_usuario ($id) {
-			
 		}
 		
 		public function get_canciones ($id) {
