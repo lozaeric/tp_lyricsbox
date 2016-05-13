@@ -33,6 +33,14 @@ class Usuario extends CI_Controller {
         $this->load->view('usuario/index', $data);
 	}
 
+	public function agregarUsuario($nombre, $apellido, $email) //todas los juegos de un usuario
+	{
+        $data['usuario'] = $this->usuario_model->nuevo_usuario($id);
+        if( empty($data['usuario'])||$data['usuario']==null )
+            show_404();
+        $this->load->view('usuario/index', $data);
+	}	
+
 	public function verJuegos($id) //todas los juegos de un usuario
 	{
         $data['juegos'] = $this->usuario_model->get_juegos($id);

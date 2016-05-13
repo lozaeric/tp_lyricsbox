@@ -5,6 +5,13 @@
 			parent::__construct ();
 			$this->load->database();
 		}
+        
+        public function nuevo_usuario($nombre, $apellido, $email) {
+            $data = array ("nombre"=>$nombre, "apelido"=>$apellido, "email"=>$email, "puntos"=>0);
+			$this->db->insert('USUARIO', $data);
+			$query = $this->db->get_where ('USUARIO', $data);
+			return $query->row_array ();
+        }
 
 
 		public function get_usuarios ($nMejores=10) {
