@@ -1,3 +1,3 @@
 <?php
-	print json_encode ($juegos);
+	print json_encode ($datos);
 ?>

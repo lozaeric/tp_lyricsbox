@@ -35,7 +35,13 @@
         }
 		
 		public function guardar($nombre, $anio, $disco, $artista, $contenido) {
-            //en este metodo se realiza toda la logica que debe tener el fragmento
+            $data = array ("nombre"=>$nombre, "anio"=>$anio, "disco"=>$disco, "artista"=>$artista);
+			$this->db->insert('cancion', $data);
+			
+			//logica fragmento
+			
+			$query = $this->db->get_where ('cancion', $data);
+			return $query->row_array ();
         }
 	}
 
