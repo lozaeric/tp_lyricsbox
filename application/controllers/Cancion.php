@@ -6,7 +6,6 @@ class Cancion extends CI_Controller {
 		parent::__construct ();
 		$this->load->model ('cancion_model');
 		$this->load->helper('ssl');
-		$this->load->helper('input');
 		force_ssl ();
 	}
 	
@@ -36,10 +35,12 @@ class Cancion extends CI_Controller {
 	
 	public function guardar ()  //guarda una nueva cancion subida por un usuario
     {
-		var $nombre=$this->input->post('nombre'), $anio=$this->input->post('anio'), $disco=$this->input->post('disco'), $artista=$this->input->post('artista'), $contenido=$this->input->post('contenido');
+		$nombre=$this->input->post('nombre'); 
+		$anio=$this->input->post('anio');
+		$disco=$this->input->post('disco');
+		$artista=$this->input->post('artista');
+		$contenido=$this->input->post('contenido');
 		
-		if ($nombre==null || $anio==null || $disco==null || $artista==null || $contenido==null)
-			show_400();
 		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $contenido);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
