@@ -28,11 +28,19 @@ class Juego extends CI_Controller {
 		$idFragmento=$this->input->post('idFragmento');
 		$tiempoJuego=$this->input->post('tiempoJuego');
 		$dificultad=$this->input->post('dificultad');
-		//$puntaje=$this->input->post('puntaje');    --->>>   hay que calcularlo del lado del servidor
-		
 		if ($idUsuario==null || $idFragmento==null || $tiempoJuego==null || $dificultad==null)
 			show_404();
-		$data['datos'] = $this->juego_model->guardar($idUsuario, $idFragmento, $tiempoJuego, $dificultad);
+		//puntaje -> falta incluir la cantidad de respuestas parciales 
+		if ($dificultad=='dificil')
+			$modificador = 2;
+		else if ($dificultad=='medio')
+			$modificador = 1;
+		if ($tiempoJuego>=300)
+			$puntaje = 0;
+		else 
+			$puntaje= (15+(300-$tiempoJuego))*$modificador;    
+		
+		$data['datos'] = $this->juego_model->guardar($idUsuario, $idFragmento, $tiempoJuego, $dificultad, $puntaje);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
         $this->load->view('juego/index', $data);

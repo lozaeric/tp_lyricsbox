@@ -34,14 +34,21 @@
 			return $query->row_array ();	          
         }
 		
-		public function guardar($nombre, $anio, $disco, $artista, $contenido) {
+		public function guardar($nombre, $anio, $disco, $artista, $contenido, $tag, $tag2) {
+			//inserto cancion
             $data = array ("nombre"=>$nombre, "anio"=>$anio, "disco"=>$disco, "artista"=>$artista);
 			$this->db->insert('cancion', $data);
-			
-			//logica fragmento
-			
+			//inserto tags
 			$query = $this->db->get_where ('cancion', $data);
-			return $query->row_array ();
+			$cancion = $query->row_array ();
+			$data = array ("codigo_cancion"=>$cancion['codigo'], "nombre"=>$tag);
+			$this->db->insert('tag', $data);
+			$data = array ("codigo_cancion"=>$cancion['codigo'], "nombre"=>$tag2);
+			$this->db->insert('tag', $data);			
+			
+			//inserto fragmentos 
+			
+			return $cancion;
         }
 	}
 

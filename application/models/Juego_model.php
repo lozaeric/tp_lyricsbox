@@ -25,8 +25,8 @@
 			return $query->result_array ();	   
 		}
 		
-		public function guardar ($idUsuario, $idFragmento, $tiempoJuego, $dificultad) {
-			$data = array ("codigo_usuario"=>$idUsuario, "codigo_fragmento"=>$idFragmento, "tiempoJuego"=>$tiempoJuego, "dificultad"=>$dificultad);
+		public function guardar ($idUsuario, $idFragmento, $tiempoJuego, $dificultad, $puntaje) {
+			$data = array ("codigo_usuario"=>$idUsuario, "codigo_fragmento"=>$idFragmento, "tiempoJuego"=>$tiempoJuego, "dificultad"=>$dificultad, "puntaje"=>$puntaje);
 			$this->db->insert('juego', $data);
 			$query = $this->db->get_where ('juego', $data);
 			return $query->row_array ();

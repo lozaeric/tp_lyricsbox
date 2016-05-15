@@ -40,8 +40,10 @@ class Cancion extends CI_Controller {
 		$disco=$this->input->post('disco');
 		$artista=$this->input->post('artista');
 		$contenido=$this->input->post('contenido');
+		$tag=$this->input->post('tag');
+		$tag2=$this->input->post('tag2');
 		
-		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $contenido);
+		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $contenido, $tag, $tag2);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
         $this->load->view('cancion/index', $data);
