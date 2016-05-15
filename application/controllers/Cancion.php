@@ -32,6 +32,42 @@ class Cancion extends CI_Controller {
             show_404();
         $this->load->view('cancion/index', $data);
 	}
+    
+    public function guardar_fragmento($texto, $codigo_cancion)
+    {
+        
+    }
+    
+    public function partir($datos)
+    {
+        $texto = $datos['contenido'];
+        //$tam = strlen($texto);
+        
+        $partir = '.';
+        $oraciones = substr_count($texto, $partir); // Numero de oraciones
+        
+        $pedazos = explode($partir, $texto); // Lista de oraciones.
+        $fragmentito = ""; // Acumulado de texto
+        $acum = 0; // Palabras acumuladas
+        
+        for($x=0; x<$oraciones; x++)
+        {
+            $palabras = str_word_count($pedazos[$x]);
+            $acum += $palabras;
+            $fragmentito += ($pedazos[$x]+$partir); // Explode le saca el delimitador.
+            
+            if($acum > 20) // Si paso 20 guardar el fragmento.
+            {
+                $acum = 0;
+                
+                guardar_fragmento($fragmentito, $datos['codigo']);
+                
+                $fragmentito = "";
+            }
+            
+        }
+    }
+        
 	
 	public function guardar ()  //guarda una nueva cancion subida por un usuario
     {
@@ -46,6 +82,9 @@ class Cancion extends CI_Controller {
 		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $contenido, $tag, $tag2);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
+            
+        $this->partir($data['datos']);
+            
         $this->load->view('cancion/index', $data);
 	}
 }
