@@ -33,9 +33,12 @@ class Cancion extends CI_Controller {
         $this->load->view('cancion/index', $data);
 	}
     
-    public function guardar_fragmento($texto, $codigo_cancion)
+    public function guardar_fragmento($texto, $codigo_cancion, $codigo_usuario)
     {
+        $data['datitos'] = $this->cancion_model->guardar_fragmento($texto, $codigo_cancion, $codigo_usuario);
         
+        if( empty($data['datitos'])||$data['datitos']==null )
+            show_404();
     }
     
     public function partir($datos)

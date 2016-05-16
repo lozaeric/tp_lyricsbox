@@ -33,6 +33,16 @@
 			$query = $this->db->get();
 			return $query->row_array ();	          
         }
+        
+        public function guardar_fragmento($texto, $cod_can, $cod_usu){
+            $data = array( "contenido"=>$texto, "codigo_cancion"=>$cod_can, "codigo_usuario"=>$cod_usu );
+            $this->db->insert('fragmento', $data);
+            
+            $query = $this->db->get_where ('fragmento', $data);
+			$cancion = $query->row_array ();
+            
+            return $cancion;
+        }
 		
 		public function guardar($nombre, $anio, $disco, $artista, $contenido, $tag, $tag2) {
 			//inserto cancion
