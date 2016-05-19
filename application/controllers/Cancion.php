@@ -33,42 +33,27 @@ class Cancion extends CI_Controller {
         $this->load->view('cancion/index', $data);
 	}
     
-    public function guardar_fragmento($texto, $codigo_cancion, $codigo_usuario)
+    private function partir($contenido)
     {
-        $data['datitos'] = $this->cancion_model->guardar_fragmento($texto, $codigo_cancion, $codigo_usuario);
-        
-        if( empty($data['datitos'])||$data['datitos']==null )
-            show_404();
-    }
-    
-    public function partir($datos)
-    {
-        $texto = $datos['contenido'];
-        //$tam = strlen($texto);
-        
-        $partir = '.';
-        $oraciones = substr_count($texto, $partir); // Numero de oraciones
-        
-        $pedazos = explode($partir, $texto); // Lista de oraciones.
+        $fragmentos = array();
+        $pedazos = explode('.', $contenido); // Lista de oraciones.
+		$oraciones = count ($pedazos);
         $fragmentito = ""; // Acumulado de texto
         $acum = 0; // Palabras acumuladas
         
-        for($x=0; x<$oraciones; x++)
+        for($x=0; $x<$oraciones; $x++)
         {
-            $palabras = str_word_count($pedazos[$x]);
-            $acum += $palabras;
-            $fragmentito += ($pedazos[$x]+$partir); // Explode le saca el delimitador.
+            $acum += count (explode(' ', $pedazos[$x]));
+            $fragmentito = $fragmentito.$pedazos[$x].'.'; // Explode le saca el delimitador.
             
-            if($acum > 20) // Si paso 20 guardar el fragmento.
+            if($acum >= 15) // Si paso 15 guardar el fragmento.
             {
                 $acum = 0;
-                
-                guardar_fragmento($fragmentito, $datos['codigo']);
-                
+                $fragmentos[] = $fragmentito;
                 $fragmentito = "";
             }
-            
         }
+		return  $fragmentos;
     }
         
 	
@@ -81,12 +66,12 @@ class Cancion extends CI_Controller {
 		$contenido=$this->input->post('contenido');
 		$tag=$this->input->post('tag');
 		$tag2=$this->input->post('tag2');
+		$usuario=$this->input->post('usuario');
+		$fragmentos = $this->partir ($contenido);
 		
-		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $contenido, $tag, $tag2);
+		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $fragmentos, $tag, $tag2, $usuario);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
-            
-        $this->partir($data['datos']);
             
         $this->load->view('cancion/index', $data);
 	}

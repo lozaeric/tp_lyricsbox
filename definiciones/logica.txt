@@ -6,8 +6,8 @@
 
 Fragmento:
 
-* Debe poseer entre 10 y 20 palabras (exceptuando signos de puntuacion)
-* Esta conformado por una o mas oraciones enteras 
+* Debe poseer como minimo 15 palabras (exceptuando signos de puntuacion)
+* Esta conformado por oracion/es enteras 
 * La cantidad de palabras en blanco es 1/3 por default 
 * Las palabras de 2 letras o menos no pueden ser palabras en blanco
 
