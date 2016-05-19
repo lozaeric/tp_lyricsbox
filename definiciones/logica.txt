@@ -1,0 +1,20 @@
+﻿Logica del juego:
+
+* El usuario sube una cancion a traves de un post a /cancion y en formato JSON
+* Se verifica la cantidad de fragmentos en que esta se puede dividir
+* Se la dividide y agrega a la base de datos
+
+Fragmento:
+
+* Debe poseer como minimo 15 palabras (exceptuando signos de puntuacion)
+* Esta conformado por oracion/es enteras 
+* La cantidad de palabras en blanco es 1/3 por default 
+* Las palabras de 2 letras o menos no pueden ser palabras en blanco
+
+Juego:
+
+* el usuario elige tags, artista y/o año y recibe un fragmento al azar que cumpla esos requerimientos
+* el usuario puede enviar una respuesta parcial y verificar si sus palabras ingresadas son correctas o incorrectas. Hay un limite de 3 veces
+* el usuario envia su respuesta final, en caso de ser erronea no obtiene puntaje
+* el limite de tiempo por fragmento es 5 minutos
+* Si la respuesta es correcta, el puntaje se calcula : 15+(300-tiempo_del_juego)*(1-(veces_que_envio_respuesta_parcial/4))
