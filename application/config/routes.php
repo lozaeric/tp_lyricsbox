@@ -56,6 +56,7 @@ $route['usuarios']['get'] = 'usuario';
 $route['usuarios/(:num)']['get'] = 'usuario/ver/$1';
 $route['usuarios/(:num)/canciones']['get'] = 'usuario/verCanciones/$1';
 $route['usuarios/(:num)/juegos']['get'] = 'usuario/verJuegos/$1';
+$route['usuarios']['post'] = 'usuario/agregarUsuario';
 $route['juegos']['post'] = 'juego';
 $route['juegos/guardar']['post'] = 'juego/guardar';
 $route['canciones']['get'] = 'cancion';

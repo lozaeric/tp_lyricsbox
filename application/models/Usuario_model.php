@@ -7,7 +7,7 @@
 		}
         
         public function guardar($nombre, $apellido, $email) {
-            $data = array ("nombre"=>$nombre, "apelido"=>$apellido, "email"=>$email, "puntos"=>0);
+            $data = array ("nombre"=>$nombre, "apellido"=>$apellido, "email"=>$email, "puntos"=>0);
 			$this->db->insert('USUARIO', $data);
 			$query = $this->db->get_where ('USUARIO', $data);
 			return $query->row_array ();
