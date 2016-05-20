@@ -15,10 +15,21 @@
 
 
 		public function get_usuarios ($nMejores=10) {
+            $ordpor = $this->input->get('campo');
+            $ordtipo = $this->input->get('orden');
+            
             $this->db->select('*');
             $this->db->from('USUARIO');
-            $this->db->order_by('puntos');
-            $this->db->limit(10);
+            
+            if($ordpor == null)
+                $ordpor = 'puntos';
+            if($ordtipo == null)
+                $ordtipo = 'DESC';
+            if($nMejores > 0)
+                $this->db->limit($nMejores);
+                
+            $this->db->order_by($ordpor, $ordtipo);
+
             
             return $this->db->get()->result_array();
 		}
@@ -31,20 +42,34 @@
 		}
 		
 		public function get_canciones ($id) {
+            $ordpor = $this->input->get('campo');
+            $ordtipo = $this->input->get('orden');
+            
             $this->db->select('CANCION.codigo, CANCION.nombre, CANCION.anio, CANCION.disco, CANCION.artista');
             $this->db->from('CANCION');
             $this->db->join('FRAGMENTO', 'FRAGMENTO.codigo_cancion = CANCION.codigo');
             //$this->db->join('USUARIO', 'USUARIO.codigo = CANCION.codigo');
             $this->db->where('FRAGMENTO.codigo_usuario', $id);
+            $this->db->group_by('CANCION.codigo');
+            
+            if($ordpor != null && $ordtipo != null)
+                $this->db->order_by( $ordpor, $ordtipo );
+
             
             return $this->db->get()->result_array();
 		}
 		
 		public function get_juegos ($id) {
+            $ordpor = $this->input->get('campo');
+            $ordtipo = $this->input->get('orden');
+            
             $this->db->select('codigo_fragmento, tiempo, dificultad, puntaje');
             $this->db->from('JUEGO');
             //$this->db->join('USUARIO', 'USUARIO.codigo = JUEGO.codigo_usuario');
             $this->db->where('JUEGO.codigo_usuario', $id);
+            
+            if($ordpor != null && $ordtipo != null)
+                $this->db->order_by( $ordpor, $ordtipo );
             
             return $this->db->get()->result_array();
 		}
