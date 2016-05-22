@@ -13,6 +13,20 @@
 			return $query->row_array ();
         }
 
+        public function delete_usuario($id){
+            $this->db->where('codigo', $id);
+            $this->db->delete('USUARIO');
+        }
+        
+        public function actualizar_usuario($id){
+            $nom = $this->input->get('nombre');
+            $ema = $this->input->get('email');
+            $ape = $this->input->get('apellido');
+            $datos = array('nombre' => $nom, 'apellido' => $ape, 'email' => ema);
+            
+            $this->db->where('codigo', $id);
+            $this->db->update('USUARIO', $datos);
+        }
 
 		public function get_usuarios ($nMejores=10) {
             $ordpor = $this->input->get('campo');
