@@ -3,7 +3,7 @@
 if (!function_exists('force_ssl'))
 {
     function force_ssl()
-    {
+    {/*
         $CI =& get_instance();
         $CI->load->helper('url');
         $CI->config->config['base_url'] =
@@ -13,7 +13,7 @@ if (!function_exists('force_ssl'))
         {
             redirect($CI->uri->uri_string());
         }
-    }
+*/    }
 }
 
 function remove_ssl()

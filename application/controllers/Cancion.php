@@ -33,7 +33,7 @@ class Cancion extends CI_Controller {
         $this->load->view('cancion/index', $data);
 	}
     
-    private function partir($contenido)
+    public function partir($contenido)
     {
         $fragmentos = array();
         $pedazos = explode('.', $contenido); // Lista de oraciones.

@@ -1,5 +1,10 @@
 <?php
 
+/**
+* @backupGlobals disabled
+* @backupStaticAttributes disabled
+*/
+
 require_once(__DIR__.'/../CITestCase.php');
 
 class ControllersTest extends CITestCase

@@ -15,7 +15,7 @@
 		}		
         
         public function get_fragmentos($id) {
-			$this->db->select('fragmento.codigo, usuario.nombre, cancion.nombre, tiempo, contenido');
+			$this->db->select('fragmento.codigo, usuario.nombre as usuario, cancion.nombre as cancion, tiempo, contenido');
 			$this->db->from('fragmento');
 			$this->db->join('cancion', 'fragmento.codigo_cancion = cancion.codigo');
 			$this->db->join('usuario', 'fragmento.codigo_usuario = usuario.codigo');
@@ -72,6 +72,15 @@
 			
 			return $cancion;
         }
+		
+		public function eliminar ($id) {
+			$this->db->where('codigo', $id);
+			$this->db->delete('Cancion');
+			$this->db->where('codigo_cancion', $id);
+			$this->db->delete('Tag');
+			$this->db->where('codigo_cancion', $id);
+			$this->db->delete('Fragmento');
+		}
 	}
 
 ?>
