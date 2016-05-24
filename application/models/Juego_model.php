@@ -14,13 +14,13 @@
 			$this->db->join('cancion', 'fragmento.codigo_cancion = cancion.codigo');
 			$this->db->join('tag', 'cancion.codigo = tag.codigo_cancion');
 			if ($tag!=null)
-				$this->db->where('tag.contenido', $tag);
+				$this->db->where('tag.nombre', $tag);
 			if ($anio!=null)
 				$this->db->where('cancion.anio', $anio);
 			if ($artista!=null)
 				$this->db->where('cancion.artista', $artista);	
-			$this->db->limit(1);			
-			$this->db->order_by(2, 'RANDOM');
+            $this->db->order_by('Random()');
+			$this->db->limit(1);
 			$query = $this->db->get ();
 			return $query->result_array ();	   
 		}
