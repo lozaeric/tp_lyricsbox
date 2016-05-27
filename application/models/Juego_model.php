@@ -9,7 +9,7 @@
 
 		public function get_juego ($tag, $anio, $artista) {
 			
-			$this->db->select('fragmento.contenido, cancion.nombre, cancion.artista, cancion.anio, cancion.disco, tag.nombre');
+			$this->db->select('fragmento.contenido as fragmento, cancion.nombre as cancion, cancion.artista, cancion.anio, cancion.disco');
 			$this->db->from('fragmento');
 			$this->db->join('cancion', 'fragmento.codigo_cancion = cancion.codigo');
 			$this->db->join('tag', 'cancion.codigo = tag.codigo_cancion');
