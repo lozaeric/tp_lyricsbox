@@ -44,7 +44,7 @@
             return $fragmento==null || empty($fragmento);
         }
 		
-		public function guardar($nombre, $anio, $disco, $artista, $fragmentos, $tag, $tag2, $usuario) {
+		public function guardar($nombre, $anio, $disco, $artista, $fragmentos, $tags, $usuario) {
 			//inserto cancion
             $data = array ("nombre"=>$nombre, "anio"=>$anio, "disco"=>$disco, "artista"=>$artista);
 			$query = $this->db->get_where ('cancion', $data);
@@ -54,21 +54,16 @@
 			//inserto tags
 			$query = $this->db->get_where ('cancion', $data);
 			$cancion = $query->row_array ();
-			$data = array ("codigo_cancion"=>$cancion['codigo'], "nombre"=>$tag);
-			$query = $this->db->get_where ('tag', $data);
-			$consulta = $query->row_array ();
-			if (empty ($consulta))
-				$this->db->insert('tag', $data);
-			$data = array ("codigo_cancion"=>$cancion['codigo'], "nombre"=>$tag2);
-			$query = $this->db->get_where ('tag', $data);
-			$fragmento = $query->row_array ();
-			if (empty ($consulta))
-				$this->db->insert('tag', $data);		
-			
+			foreach ($tags as $tag) {
+				$data = array ("codigo_cancion"=>$cancion['codigo'], "nombre"=>$tag);
+				$query = $this->db->get_where ('tag', $data);
+				$consulta = $query->row_array ();
+				if (empty ($consulta))
+					$this->db->insert('tag', $data);
+			}
 			//inserto fragmentos 
-			$n = count ($fragmentos);
-			for ($i=0; $i<$n; $i++) 
-				$this->guardar_fragmento ($fragmentos[$i], $data['codigo_cancion'], $usuario);
+			foreach ($fragmentos as $f)
+				$this->guardar_fragmento ($f, $data['codigo_cancion'], $usuario);
 			
 			return $cancion;
         }

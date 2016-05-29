@@ -26,7 +26,8 @@ class CancionTest extends CITestCase {
 		//crear cancion,fragmento y tags
 		$fragmentos = $this->CI->partir('a a a a a a a a a a a a a a a a a a a a.');
 		$this->assertNotEmpty($fragmentos);
-		$cancion = $this->CI->cancion_model->guardar('prueba', 0, 'prueba2', 'prueba3', $fragmentos, 'prueba4', 'prueba5', 1);
+		$tags = explode ('.', 'prueba4.prueba5');
+		$cancion = $this->CI->cancion_model->guardar('prueba', 0, 'prueba2', 'prueba3', $fragmentos, $tags, 1);
 		//verificar cancion
 		$this->assertEquals($cancion['nombre'], 'prueba');
 		$this->assertEquals($cancion['anio'], '0');

@@ -19,7 +19,7 @@ class Juego extends CI_Controller {
 	  * Un ejemplo de uso es : .../juegos/  . Utiliza el verbo HTTP POST. Por lo menos, un parametro de los siguientes debe enviarse.
 	  *
 	  * @param string $tag tag de la cancion
-	  * @param string $anio anio de la cancion
+	  * @param int $anio anio de la cancion
 	  * @param string $artista artista de la cancion
 	  *
 	  * @api
@@ -43,9 +43,9 @@ class Juego extends CI_Controller {
 	  *
 	  * Un ejemplo de uso es : .../juegos/guardar  . Utiliza el verbo HTTP POST. Todos los parametros son obligatorios
 	  *
-	  * @param string $idUsuario id del usuario
-	  * @param string $idFragmento id del fragmento
-	  * @param string $tiempoJuego tiempo en segundos del juego
+	  * @param int $idUsuario id del usuario
+	  * @param int $idFragmento id del fragmento
+	  * @param int $tiempoJuego tiempo en segundos del juego
 	  * @param string $dificultad dificultad del juego (medio o dificil)
 	  *
 	  * @api

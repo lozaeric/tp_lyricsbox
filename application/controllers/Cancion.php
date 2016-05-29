@@ -28,7 +28,7 @@ class Cancion extends CI_Controller {
     
       /**
 	  * Este metodo muestra en formato JSON los datos de una cancion en particular (anio, disco, artista, nombre)
-      * @param string $id codigo de la cancion
+      * @param int $id codigo de la cancion
 	  * @api
 	  * @return void
 	  */
@@ -44,7 +44,7 @@ class Cancion extends CI_Controller {
           /**
 	  * Este metodo muestra en formato JSON los fragmentos de la cancion con codigo id
       *
-      * @param string $id codigo de la cancion
+      * @param int $id codigo de la cancion
       *
 	  * @api
 	  * @return void
@@ -88,12 +88,12 @@ class Cancion extends CI_Controller {
     /**
     * Este metodo guarda una cancion y genera los fragmentos correspondientes. La cancion guardada será devulta en JSON.
     * @param string $nombre nombre de la cancion
-    * @param string $anio anio de la cancion
+    * @param int $anio anio de la cancion
     * @param string $disco disco al que pertenece
     * @param string $artista quien la interpreta
     * @param string $contenido letra de la cancion
-    * @param string $tag tag de la cancion
-    * @param string $usuario usuario que sube la cancion
+    * @param string $tag tags de la cancion separador por '.'
+    * @param int $idUsuario usuario que sube la cancion
     * @api
     * @return void
     */
@@ -105,12 +105,11 @@ class Cancion extends CI_Controller {
 		$disco=$this->input->post('disco');
 		$artista=$this->input->post('artista');
 		$contenido=$this->input->post('contenido');
-		$tag=$this->input->post('tag');
-		$tag2=$this->input->post('tag2');
+		$tags=explode('.', $this->input->post('tag'));
 		$usuario=$this->input->post('usuario');
 		$fragmentos = $this->partir ($contenido);
 		
-		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $fragmentos, $tag, $tag2, $usuario);
+		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $fragmentos, $tags, $usuario);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
             
