@@ -7,20 +7,38 @@
 		}
 
 		public function get_canciones() {
+            $ordpor = $this->input->get('campo');
+            $ordtipo = $this->input->get('orden');
+            
+            if($ordpor == null)
+                $ordpor = 'nombre';
+            if($ordtipo == null)
+                $ordtipo = 'DESC';
+                
 			$this->db->select('codigo,nombre,anio,disco,artista');
 			$this->db->from('cancion');
-			$this->db->order_by("nombre");
+            $this->db->order_by($ordpor, $ordtipo);
+            
 			$query = $this->db->get ();
 			return $query->result_array ();		
 		}		
         
         public function get_fragmentos($id) {
+            $ordpor = $this->input->get('campo');
+            $ordtipo = $this->input->get('orden');
+            
+            if($ordpor == null)
+                $ordpor = 'nombre';
+            if($ordtipo == null)
+                $ordtipo = 'DESC';
+            
 			$this->db->select('fragmento.codigo, usuario.nombre as usuario, cancion.nombre as cancion, tiempo, contenido');
 			$this->db->from('fragmento');
 			$this->db->join('cancion', 'fragmento.codigo_cancion = cancion.codigo');
 			$this->db->join('usuario', 'fragmento.codigo_usuario = usuario.codigo');
 			$this->db->where('fragmento.codigo_cancion', $id);
-			$this->db->order_by('cancion.nombre');
+			$this->db->order_by('cancion.'+$ordpor, $ordtipo);
+            
 			$query = $this->db->get ();
 			return $query->result_array ();	            
         }
