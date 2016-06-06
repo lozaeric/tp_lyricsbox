@@ -1,6 +1,7 @@
 # Requisitos
 
 * Apache HTTP Server
+* PHP
 
 # Opcionales
 
