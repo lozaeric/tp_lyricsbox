@@ -1,0 +1,18 @@
+Manual instalación:
+
+Para poder correr la API en el servidor se necesita instalar:
+-	Apache
+-	PHP
+-	PHPDoc
+-	PHPUnit
+La base de datos, inicialmente, está implementada en SQLite, por lo que no se necesita instalar ningun gestor de BD.
+
+Clonar el branch master del repositorio de github:
+https://github.com/lozaeric/tp_lyricsbox.git
+Ahora puede acceder a la API de la siguiente forma:
+http://localhost/index.php/usuario
+http://localhost/index.php/cancion
+http://localhost/index.php/juego
+Para generar la documentación correr PHPDoc en la carpeta /application/controllers
+
+´Para ejecutar los tests correr PHPUnit en la carpeta /application/tests
