@@ -9,6 +9,9 @@
         <const name="PHPUNIT_TEST" value="1" />
         <server name="REMOTE_ADDR" value="0.0.0.0" />
     </php>
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
     <filter>
         <blacklist>
             <directory suffix=".php">system</directory>
