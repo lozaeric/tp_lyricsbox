@@ -1,13 +1,13 @@
-## LyricsBox
+# LyricsBox
 
-https://travis-ci.org/lozaeric/tp_lyricsbox.svg?branch=master
+[![Build Status](https://travis-ci.org/lozaeric/tp_lyricsbox.svg?branch=master)](https://travis-ci.org/lozaeric/tp_lyricsbox)
 
-# Requisitos
+## Requisitos
 
 * Apache HTTP Server
 * PHP
 
-# Opcionales
+## Opcionales
 
 * PHPUnit
 * PHPDoc
