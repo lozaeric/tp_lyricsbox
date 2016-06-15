@@ -93,6 +93,9 @@ class Usuario extends CI_Controller {
 
 	public function verJuegos($id) //todos los juegos de un usuario
 	{
+        $ordpor = $this->input->get('campo');
+        $ordtipo = $this->input->get('orden');
+            
         $data['datos'] = $this->usuario_model->get_juegos($id);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
