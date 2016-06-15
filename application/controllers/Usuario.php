@@ -21,7 +21,9 @@ class Usuario extends CI_Controller {
 	
 	public function index() //muestra datos de todos los usuarios - se puede filtrar para traer mejores N puntajes
 	{
-        $data['datos'] = $this->usuario_model->get_usuarios();
+        $ordpor = $this->input->get('campo');
+        $ordtipo = $this->input->get('orden');
+        $data['datos'] = $this->usuario_model->get_usuarios(10, $ordpor, $ordtipo);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
         $this->load->view('usuario/index', $data);
@@ -51,6 +53,8 @@ class Usuario extends CI_Controller {
 	
 	public function verCanciones($id) //todas las canciones subidas de un usuario
 	{
+        $ordpor = $this->input->get('campo');
+        $ordtipo = $this->input->get('orden');
         $data['datos'] = $this->usuario_model->get_canciones($id);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();

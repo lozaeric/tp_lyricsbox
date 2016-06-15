@@ -28,9 +28,7 @@
             $this->db->update('USUARIO', $datos);
         }
 
-		public function get_usuarios ($nMejores=10) {
-            $ordpor = $this->input->get('campo');
-            $ordtipo = $this->input->get('orden');
+		public function get_usuarios ($nMejores=-1, $ordpor = null, $ordtipo = null) {
             
             $this->db->select('*');
             $this->db->from('USUARIO');
@@ -39,6 +37,7 @@
                 $ordpor = 'puntos';
             if($ordtipo == null)
                 $ordtipo = 'DESC';
+                
             if($nMejores > 0)
                 $this->db->limit($nMejores);
                 
@@ -55,9 +54,7 @@
             return $this->db->get()->row_array();
 		}
 		
-		public function get_canciones ($id) {
-            $ordpor = $this->input->get('campo');
-            $ordtipo = $this->input->get('orden');
+		public function get_canciones ($id, $ordpor=null, $ordtipo=null) {
             
             $this->db->select('CANCION.codigo, CANCION.nombre, CANCION.anio, CANCION.disco, CANCION.artista');
             $this->db->from('CANCION');
@@ -73,10 +70,7 @@
             return $this->db->get()->result_array();
 		}
 		
-		public function get_juegos ($id) {
-            $ordpor = $this->input->get('campo');
-            $ordtipo = $this->input->get('orden');
-            
+		public function get_juegos ($id, $ordpor=null, $ordtipo=null) {
             $this->db->select('codigo_fragmento, tiempo, dificultad, puntaje');
             $this->db->from('JUEGO');
             //$this->db->join('USUARIO', 'USUARIO.codigo = JUEGO.codigo_usuario');
