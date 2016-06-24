@@ -15,4 +15,4 @@ http://localhost/index.php/cancion
 http://localhost/index.php/juego
 Para generar la documentación correr PHPDoc en la carpeta /application/controllers
 
-´Para ejecutar los tests correr PHPUnit en la carpeta /application/tests
+´Para ejecutar los tests correr PHPUnit en la carpeta principal
