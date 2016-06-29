@@ -9,7 +9,12 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="ruta" elementType="Argument">
             <stringProp name="Argument.name">ruta</stringProp>
-            <stringProp name="Argument.value">C:\xampp\htdocs\application\db</stringProp>
+            <stringProp name="Argument.value">C:\xampp\htdocs\application\db\</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="nombre" elementType="Argument">
+            <stringProp name="Argument.name">nombre</stringProp>
+            <stringProp name="Argument.value">dbqlite_stress.db</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -22,7 +27,7 @@
         <stringProp name="checkQuery">Select 1</stringProp>
         <stringProp name="connectionAge">5000</stringProp>
         <stringProp name="dataSource">jdbcConfig</stringProp>
-        <stringProp name="dbUrl">jdbc:sqlite:C:/xampp/htdocs/application/db/dbqlite_stress.db</stringProp>
+        <stringProp name="dbUrl">jdbc:sqlite:${ruta}${nombre}</stringProp>
         <stringProp name="driver">org.sqlite.JDBC</stringProp>
         <boolProp name="keepAlive">true</boolProp>
         <stringProp name="password"></stringProp>
@@ -33,14 +38,14 @@
         <stringProp name="username"></stringProp>
       </JDBCDataSource>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="USUAL" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">25</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">0</stringProp>
         <longProp name="ThreadGroup.start_time">1370729701000</longProp>
         <longProp name="ThreadGroup.end_time">1370729701000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -48,7 +53,12 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="AGREGARCANCION" enabled="true">
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="RELOJ1" enabled="true">
+          <stringProp name="ConstantTimer.delay">250</stringProp>
+          <stringProp name="RandomTimer.range">250</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="AGREGARCANCION" enabled="false">
           <stringProp name="dataSource">jdbcConfig</stringProp>
           <stringProp name="queryType">Update Statement</stringProp>
           <stringProp name="query">insert into CANCION (nombre, anio, disco, artista) values (&quot;cancionita&quot;, &quot;1990&quot;, &quot;disquito&quot;, &quot;artistita&quot;);</stringProp>
@@ -72,7 +82,7 @@
           <stringProp name="resultSetHandler">Store as String</stringProp>
         </JDBCSampler>
         <hashTree/>
-        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="TRAERTAG" enabled="true">
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="TRAERTAG" enabled="false">
           <stringProp name="dataSource">jdbcConfig</stringProp>
           <stringProp name="queryType">Select Statement</stringProp>
           <stringProp name="query">select * from TAG;</stringProp>
@@ -80,6 +90,72 @@
           <stringProp name="queryArgumentsTypes"></stringProp>
           <stringProp name="variableNames"></stringProp>
           <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="PICO" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador Bucle" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">25</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">0</stringProp>
+        <longProp name="ThreadGroup.start_time">1467161780000</longProp>
+        <longProp name="ThreadGroup.end_time">1467161780000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="RELOJ2" enabled="true">
+          <stringProp name="ConstantTimer.delay">3000</stringProp>
+          <stringProp name="RandomTimer.range">175</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="TRAERCANCIONES" enabled="true">
+          <stringProp name="dataSource">jdbcConfig</stringProp>
+          <stringProp name="query">select * from CANCION</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryType">Select Statement</stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Grupo de Hilos" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador Bucle" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">2</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">0</stringProp>
+        <longProp name="ThreadGroup.start_time">1467162478000</longProp>
+        <longProp name="ThreadGroup.end_time">1467162478000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="RELOJ3" enabled="true">
+          <stringProp name="ConstantTimer.delay">1200</stringProp>
+          <stringProp name="RandomTimer.range">500</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="ESCRIBIR" enabled="true">
+          <stringProp name="dataSource">jdbcConfig</stringProp>
+          <stringProp name="query">insert into CANCION (nombre, anio, disco, artista) values (&quot;cancionita&quot;, &quot;1990&quot;, &quot;disquito&quot;, &quot;artistita&quot;);</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryType">Update Statement</stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
           <stringProp name="resultSetHandler">Store as String</stringProp>
         </JDBCSampler>
