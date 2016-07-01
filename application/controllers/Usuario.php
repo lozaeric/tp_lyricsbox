@@ -23,7 +23,7 @@ class Usuario extends CI_Controller {
 	{
         $ordpor = $this->input->get('campo');
         $ordtipo = $this->input->get('orden');
-        $data['datos'] = $this->usuario_model->get_usuarios(10, $ordpor, $ordtipo);
+        $data['datos'] = $this->usuario_model->get_usuarios(15, $ordpor, $ordtipo);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
         $this->load->view('usuario/index', $data);
@@ -55,7 +55,7 @@ class Usuario extends CI_Controller {
 	{
         $ordpor = $this->input->get('campo');
         $ordtipo = $this->input->get('orden');
-        $data['datos'] = $this->usuario_model->get_canciones($id);
+        $data['datos'] = $this->usuario_model->get_canciones($id, $ordpor, $ordtipo);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
         $this->load->view('usuario/index', $data);
@@ -96,7 +96,7 @@ class Usuario extends CI_Controller {
         $ordpor = $this->input->get('campo');
         $ordtipo = $this->input->get('orden');
             
-        $data['datos'] = $this->usuario_model->get_juegos($id);
+        $data['datos'] = $this->usuario_model->get_juegos($id, $ordpor, $ordtipo);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
         $this->load->view('usuario/index', $data);

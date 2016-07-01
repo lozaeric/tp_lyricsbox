@@ -31,8 +31,8 @@ class Juego extends CI_Controller {
 		$anio=$this->input->post('anio');
 		$artista=$this->input->post('artista');
 		
-		if ($tag==null && $anio==null && $artista==null)
-			show_404();
+		//if ($tag==null && $anio==null && $artista==null)
+			//show_404();
 		$data['datos'] = $this->juego_model->get_juego($tag, $anio, $artista);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
@@ -58,7 +58,7 @@ class Juego extends CI_Controller {
 		$dificultad=$this->input->post('dificultad');
 		if ($idUsuario==null || $idFragmento==null || $tiempoJuego==null || $dificultad==null)
 			show_404();
-		$puntaje = calculoPuntaje ($dificultad, $tiempoJuego); //falta incluir la cantidad de respuestas parciales 
+		$puntaje = $this->calcularPuntaje ($dificultad, $tiempoJuego); //falta incluir la cantidad de respuestas parciales 
 		
 		$data['datos'] = $this->juego_model->guardar($idUsuario, $idFragmento, $tiempoJuego, $dificultad, $puntaje);
         if( empty($data['datos'])||$data['datos']==null )

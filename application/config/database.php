@@ -78,7 +78,7 @@ sqlite
 */
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'sqlite:'.APPPATH.'/db/dbqlite.db',
+	'hostname' => 'sqlite:'.APPPATH.'/db/dbqlite_stress.db',
 	'username' => '',
 	'password' => '',
 	'database' => '',
