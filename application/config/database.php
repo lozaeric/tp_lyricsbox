@@ -76,6 +76,7 @@ $query_builder = TRUE;
 /*
 sqlite
 */
+
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'sqlite:'.APPPATH.'/db/dbqlite_stress.db',
@@ -98,14 +99,15 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
+
+//mysql
 /*
-mysql
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => '',
+	'username' => 'root',
 	'password' => '',
-	'database' => '',
+	'database' => 'lyrics',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -121,5 +123,4 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
-
 */

@@ -67,7 +67,7 @@
             $data = array ("nombre"=>$nombre, "anio"=>$anio, "disco"=>$disco, "artista"=>$artista);
 			$query = $this->db->get_where ('cancion', $data);
 			$consulta = $query->row_array ();
-			//if (empty ($consulta))
+			if (empty ($consulta))
 				$this->db->insert('cancion', $data);
 			//inserto tags
 			$query = $this->db->get_where ('cancion', $data);

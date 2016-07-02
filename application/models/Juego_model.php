@@ -19,7 +19,7 @@
 				$this->db->where('cancion.anio', $anio);
 			if ($artista!=null)
 				$this->db->where('cancion.artista', $artista);	
-            $this->db->order_by('Random()');
+            $this->db->order_by('random()');
 			$this->db->limit(1);
 			$query = $this->db->get ();
 			return $query->result_array ();	   
