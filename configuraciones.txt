@@ -1,0 +1,42 @@
+BDs:
+
+==============================================================================================
+SQL de MariaDB en la carpeta mariaSQL.
+
+Bases de datos sqlite en application/db.
+==============================================================================================
+
+
+Bases incluidas:
+
+dbqlite (base de datos inicial, los tests corren
+sobre esta)
+dbqlite_stress (base de datos de prueba, contienemiles de registros azarosos)
+
+
+==============================================================================================
+Cambiando:
+
+Para cambiar la BD a utilizar dirigirse al archivo database.php en la carpeta application/config, si quiere cambiar la base sqlite
+modifique el nombre dbqlite por dbqlite_stress o viceversa.
+
+Si desea cambiar a MariaDB necesitará comentar la parte de sqlite y descomentar la parte de "mysql/maria" ***
+
+==============================================================================================
+***CUIDADO:
+
+Si cambia de gestor de base de datos (sqlite por mysql o viceversa) deberá cambiar el archivo juego_model.php linea 22
+por la siguiente.
+
+
+Si va a usar sqlite: $this->db->order_by('random()');
+Si va a usar maria: $this->db->order_by('rand()');
+==============================================================================================
+
+LOAD TESTS
+
+Recuerde configurar las rutas correctas de la API/BD para los tests de forma que coincidan
+con la estructura de carpetas que maneja con Apache.
+
+
+==============================================================================================

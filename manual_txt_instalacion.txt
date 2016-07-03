@@ -3,9 +3,15 @@ Manual instalación:
 Para poder correr la API en el servidor se necesita instalar:
 -	Apache
 -	PHP
--	PHPDoc
--	PHPUnit
+-	PHPDoc (necesita instalar composer e instalar phpdoc)
+-	PHPUnit (necesita instalar composer e instalar phpunit)
+
+Base de datos:
+
 La base de datos, inicialmente, está implementada en SQLite, por lo que no se necesita instalar ningun gestor de BD.
+
+Si necesita utilizar MariaDB/MySQL se ha incluido la carpeta mariaSQL donde se incluye el archivo SQL utilizado para la BD.
+
 
 Clonar el branch master del repositorio de github:
 https://github.com/lozaeric/tp_lyricsbox.git
