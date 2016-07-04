@@ -9,15 +9,21 @@
 		public function get_canciones() {
             $ordpor = $this->input->get('campo');
             $ordtipo = $this->input->get('orden');
+			$filtrar = $this->input->get('filtrar');
+			$como = $this->input->get('valor');
             
             if($ordpor == null)
                 $ordpor = 'nombre';
             if($ordtipo == null)
                 $ordtipo = 'DESC';
+
                 
 			$this->db->select('codigo,nombre,anio,disco,artista');
 			$this->db->from('cancion');
             $this->db->order_by($ordpor, $ordtipo);
+
+			if($filtrar != null && $como != null)
+				$this->db->where($filtrar, $como);
             
 			$query = $this->db->get ();
 			return $query->result_array ();		
