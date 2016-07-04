@@ -1,10 +1,11 @@
 Manual instalación:
 
-Para poder correr la API en el servidor se necesita instalar:
+Para poder correr la API, testearla y documentarla se necesita instalar:
 -	Apache
 -	PHP
--	PHPDoc (necesita instalar composer e instalar phpdoc)
--	PHPUnit (necesita instalar composer e instalar phpunit)
+-	PHPDoc Desde acá se puede descargar la última versión : https://phar.phpunit.de/phpunit.phar 
+-	PHPUnit Desde acá se puede descargar la última versión : http://www.phpdoc.org/phpDocumentor.phar 
+
 
 Base de datos:
 
@@ -19,6 +20,6 @@ Ahora puede acceder a la API de la siguiente forma:
 http://localhost/index.php/usuario
 http://localhost/index.php/cancion
 http://localhost/index.php/juego
-Para generar la documentación correr PHPDoc en la carpeta /application/controllers
 
-´Para ejecutar los tests correr PHPUnit en la carpeta principal
+Para generar la documentación: $ php phpDocumentor.phar -d . -t .\tp_lyricsbox\application\controllers
+Para ejecutar los tests: $ php phpunit.phar .\tp_lyricsbox
