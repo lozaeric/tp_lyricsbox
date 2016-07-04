@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 class Cancion extends CI_Controller {
     /**
     * @ignore
@@ -11,7 +12,43 @@ class Cancion extends CI_Controller {
 		$this->load->helper('ssl');
 		force_ssl ();
 	}
-	
+
+
+	/**
+    * @ignore
+    */
+    private function validador()
+    {
+        $username = null;
+        $password = null;
+
+        // mod_php
+        if (isset($_SERVER['PHP_AUTH_USER'])) {
+            $username = $_SERVER['PHP_AUTH_USER'];
+            $password = $_SERVER['PHP_AUTH_PW'];
+
+        // most other servers
+        } elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+
+            if (strpos(strtolower($_SERVER['HTTP_AUTHORIZATION']),'basic')===0)
+            list($username,$password) = explode(':',base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+
+        }
+
+        if( ($username == null and $password == null) or ($username != "juan" or $password != "123") )
+        {
+            header('HTTP/1.0 401 Unauthorized');
+            header('HTTP/1.1 401 Unauthorized');
+            header('WWW-Authenticate: Basic realm="Lyrics BOX"');
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
       /**
 	  * Este metodo muestra en formato JSON las canciones guardadas en el sistema.
       * @param string $campo campo por el cual ordenar - OPCIONAL
@@ -21,12 +58,19 @@ class Cancion extends CI_Controller {
       * @api
 	  * @return void
 	  */
-    
 	public function index() //muestra datos de todos las canciones
 	{
-        $data['datos'] = $this->cancion_model->get_canciones();
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+        if( $this->validador()  )
+        {
+            $data['datos'] = $this->cancion_model->get_canciones();
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+        }
+        else
+        {
+            $data['datos'] = "Rechazado";
+        }
+
         $this->load->view('cancion/index', $data);
 	}
     
@@ -39,9 +83,17 @@ class Cancion extends CI_Controller {
 	
 	public function ver($id) //muestra la cancion id
 	{
-        $data['datos'] = $this->cancion_model->get_cancion($id);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+        if( $this->validador() )
+        {
+            $data['datos'] = $this->cancion_model->get_cancion($id);
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+        }
+        else
+        {
+            $data['datos'] = "Rechazado";
+        }
+
         $this->load->view('cancion/index', $data);
 	}
 	
@@ -57,10 +109,20 @@ class Cancion extends CI_Controller {
     
 	public function verFragmentos ($id)  //devuelve los fragmentos de la cancion id
     {
-        $data['datos'] = $this->cancion_model->get_fragmentos($id);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
-        $this->load->view('cancion/index', $data);
+        if( $this->validador() )
+        {
+            $data['datos'] = $this->cancion_model->get_fragmentos($id);
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+
+            $this->load->view('cancion/index', $data);
+        }
+        else
+        {
+            $data['datos'] = "Rechazado";
+        }
+
+        //$this->load->view('cancion/index', $data);
 	}
     
     /**
@@ -105,18 +167,25 @@ class Cancion extends CI_Controller {
 	
 	public function guardar ()  //guarda una nueva cancion subida por un usuario
     {
-		$nombre=$this->input->post('nombre'); 
-		$anio=$this->input->post('anio');
-		$disco=$this->input->post('disco');
-		$artista=$this->input->post('artista');
-		$contenido=$this->input->post('contenido');
-		$tags=explode('.', $this->input->post('tag'));
-		$usuario=$this->input->post('usuario');
-		$fragmentos = $this->partir ($contenido);
-		
-		$data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $fragmentos, $tags, $usuario);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+        if( $this->validador() )
+        {
+            $nombre=$this->input->post('nombre'); 
+            $anio=$this->input->post('anio');
+            $disco=$this->input->post('disco');
+            $artista=$this->input->post('artista');
+            $contenido=$this->input->post('contenido');
+            $tags=explode('.', $this->input->post('tag'));
+            $usuario=$this->input->post('usuario');
+            $fragmentos = $this->partir ($contenido);
+            
+            $data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $fragmentos, $tags, $usuario);
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+        }
+        else
+        {
+            $data['datos'] = "Rechazado";
+        }
             
         $this->load->view('cancion/index', $data);
 	}
