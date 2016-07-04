@@ -45,3 +45,16 @@ Para correr los tests de carga o cambiar la BD sin problema dirijase al archivo 
 RECUERDE QUE LOS TESTS DE CARGA FUERON ESCRITOS CON UNA RUTA EN PARTICULAR, MODIFIQUELA PARA QUE REFLEJE SU RUTA DE LA APLICACION.
 (La incluida tiene el repositorio clonado en el directorio propio de apache, es decir localhost/index.php/{RECURSO})
 **
+
+
+EJEMPLOS DE LA API con GET:
+
+localhost/{BASE}/index.php/usuarios
+localhost/{BASE}/index.php/usuarios/1
+localhost/{BASE}/index.php/usuarios/1/canciones
+localhost/{BASE}/index.php/usuarios?campo=codigo&orden=DESC
+localhost/{BASE}/index.php/usuarios/1/juegos
+
+localhost/{BASE}/index.php/canciones
+localhost/{BASE}/index.php/canciones?filtrar=artista&valor=Charly
+localhost/{BASE}/index.php/canciones/37/fragmentos
