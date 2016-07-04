@@ -48,20 +48,28 @@
 		}
 		
 		public function get_usuario ($id) {
+
             $this->db->select('*');
             $this->db->from('USUARIO');
             $this->db->where('codigo', $id);
+
             return $this->db->get()->row_array();
 		}
 		
 		public function get_canciones ($id, $ordpor=null, $ordtipo=null) {
-            
-            $this->db->select('CANCION.codigo, CANCION.nombre, CANCION.anio, CANCION.disco, CANCION.artista');
+            $limitar = $this->input->get('limite');
+
+            if($limitar == null)
+                $limitar = 5;
+
+            $this->db->select('CANCION.codigo, CANCION.nombre, CANCION.anio, CANCION.disco, CANCION.artista, FRAGMENTO.tiempo');
             $this->db->from('CANCION');
             $this->db->join('FRAGMENTO', 'FRAGMENTO.codigo_cancion = CANCION.codigo');
             //$this->db->join('USUARIO', 'USUARIO.codigo = CANCION.codigo');
             $this->db->where('FRAGMENTO.codigo_usuario', $id);
             $this->db->group_by('CANCION.codigo');
+            $this->db->order_by('FRAGMENTO.tiempo', 'DESC');
+            $this->db->limit($limitar);
             
             if($ordpor != null && $ordtipo != null)
                 $this->db->order_by( $ordpor, $ordtipo );

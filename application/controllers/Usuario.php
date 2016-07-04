@@ -23,7 +23,12 @@ class Usuario extends CI_Controller {
 	{
         $ordpor = $this->input->get('campo');
         $ordtipo = $this->input->get('orden');
-        $data['datos'] = $this->usuario_model->get_usuarios(15, $ordpor, $ordtipo);
+        $mejores = $this->input->get('limite');
+
+        if($mejores==null)
+            $mejores = 15;
+
+        $data['datos'] = $this->usuario_model->get_usuarios($mejores, $ordpor, $ordtipo);
         if( empty($data['datos'])||$data['datos']==null )
             show_404();
         $this->load->view('usuario/index', $data);

@@ -27,7 +27,7 @@
             
 			$query = $this->db->get ();
 			return $query->result_array ();		
-		}		
+		}
         
         public function get_fragmentos($id) {
             $ordpor = $this->input->get('campo');
