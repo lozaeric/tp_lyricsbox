@@ -1,15 +1,15 @@
-Manual instalación:
+Manual instalaciï¿½n:
 
 Para poder correr la API, testearla y documentarla se necesita instalar:
 -	Apache
 -	PHP
--	PHPDoc Desde acá se puede descargar la última versión : https://phar.phpunit.de/phpunit.phar 
--	PHPUnit Desde acá se puede descargar la última versión : http://www.phpdoc.org/phpDocumentor.phar 
+-	PHPDoc Desde acï¿½ se puede descargar la ï¿½ltima versiï¿½n : https://phar.phpunit.de/phpunit.phar 
+-	PHPUnit Desde acï¿½ se puede descargar la ï¿½ltima versiï¿½n : http://www.phpdoc.org/phpDocumentor.phar 
 
 
 Base de datos:
 
-La base de datos, inicialmente, está implementada en SQLite, por lo que no se necesita instalar ningun gestor de BD.
+La base de datos, inicialmente, estï¿½ implementada en SQLite, por lo que no se necesita instalar ningun gestor de BD.
 
 Si necesita utilizar MariaDB/MySQL se ha incluido la carpeta mariaSQL donde se incluye el archivo SQL utilizado para la BD.
 
@@ -21,5 +21,27 @@ http://localhost/index.php/usuario
 http://localhost/index.php/cancion
 http://localhost/index.php/juego
 
-Para generar la documentación: $ php phpDocumentor.phar -d . -t .\tp_lyricsbox\application\controllers
+**
+Puede clonar el repositorio en el directorio servido por apache o puede clonarlo en otra ubicacion y hacer
+un link simbolico dentro del directorio de apache.
+Podra acceder desde el navegador a la API de la siguiente forma:
+
+localhost/{BASE}/index.php/{RECURSO}
+
+--
+(Base incluye todos los directorios desde el raiz que sirve apache hasta donde comienza la aplicacion en si)
+(Si clono directamente la ruta serÃ­a localhost/tp_lyricsbox/index.php/{RECURSO})
+--
+
+**
+
+Para generar la documentaciï¿½n: $ php phpDocumentor.phar -d . -t .\tp_lyricsbox\application\controllers
 Para ejecutar los tests: $ php phpunit.phar .\tp_lyricsbox
+
+
+Para correr los tests de carga o cambiar la BD sin problema dirijase al archivo configuraciones.txt donde se incluye ayuda extra.
+
+**
+RECUERDE QUE LOS TESTS DE CARGA FUERON ESCRITOS CON UNA RUTA EN PARTICULAR, MODIFIQUELA PARA QUE REFLEJE SU RUTA DE LA APLICACION.
+(La incluida tiene el repositorio clonado en el directorio propio de apache, es decir localhost/index.php/{RECURSO})
+**
