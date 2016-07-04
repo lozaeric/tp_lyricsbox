@@ -15,6 +15,9 @@ class Usuario extends CI_Controller {
     
           /**
 	  * Devuelve una lista de los usuarios existentes
+      * @param string $campo campo por el cual ordenar - OPCIONAL
+      * @param string $orden ordenamiento (ASCendente|DESCendente) - OPCIONAL
+      * @param int $limite cantidad a mostrar (default 15) - OPCIONAL
 	  * @api
 	  * @return void
 	  */
@@ -41,7 +44,7 @@ class Usuario extends CI_Controller {
     * @return void
     */
     
-	public function ver($id) //muestra datos del usuario con ese id y sus ultimas 5 canciones subidas
+	public function ver($id) //muestra datos del usuario con ese id
 	{
         $data['datos'] = $this->usuario_model->get_usuario($id);
         if( empty($data['datos'])||$data['datos']==null )
@@ -52,6 +55,9 @@ class Usuario extends CI_Controller {
     /**
     * Devuelve las canciones subidas por el usuario ID
     * @param string $id codigo del usuario
+    * @param string $campo campo por el cual ordenar - OPCIONAL
+    * @param string $orden ordenamiento (ASCendente|DESCendente) - OPCIONAL
+    * @param int $limite cantidad a traer (default 5) - OPCIONAL
     * @api
     * @return void
     */
@@ -92,6 +98,8 @@ class Usuario extends CI_Controller {
     /**
     * Devuelve un listado de las partidas jugadas por el usuario.
     * @param string $id codigo del usuario
+    * @param string $campo campo por el cual ordenar - OPCIONAL
+    * @param string $orden ordenamiento (ASCendente|DESCendente) - OPCIONAL
     * @api
     * @return void
     */

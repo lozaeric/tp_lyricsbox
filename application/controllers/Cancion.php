@@ -14,7 +14,11 @@ class Cancion extends CI_Controller {
 	
       /**
 	  * Este metodo muestra en formato JSON las canciones guardadas en el sistema.
-	  * @api
+      * @param string $campo campo por el cual ordenar - OPCIONAL
+      * @param string $orden ordenamiento (ASCendente|DESCendente) - OPCIONAL
+      * @param string $filtrar campo por el cual filtrar - OPCIONAL
+      * @param string $valor valor por el cual filtrar (dejar pasar) - OPCIONAL
+      * @api
 	  * @return void
 	  */
     
@@ -45,7 +49,8 @@ class Cancion extends CI_Controller {
 	  * Este metodo muestra en formato JSON los fragmentos de la cancion con codigo id
       *
       * @param int $id codigo de la cancion
-      *
+        * @param string $campo campo por el cual ordenar
+  	    * @param string $orden ordenamiento (ASCendente|DESCendente)
 	  * @api
 	  * @return void
 	  */
