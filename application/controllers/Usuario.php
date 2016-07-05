@@ -13,7 +13,61 @@ class Usuario extends CI_Controller {
 		force_ssl ();
 	}
     
-          /**
+
+	/**
+    * @ignore
+    */
+    private function validador()
+    {
+        $username = null;
+        $password = null;
+
+        // mod_php
+        if (isset($_SERVER['PHP_AUTH_USER'])) {
+            $username = $_SERVER['PHP_AUTH_USER'];
+            $password = $_SERVER['PHP_AUTH_PW'];
+
+        // most other servers
+        } elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+
+            if (strpos(strtolower($_SERVER['HTTP_AUTHORIZATION']),'basic')===0)
+            list($username,$password) = explode(':',base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+
+        }
+
+        if( ($username == null and $password == null) or ($username != "juan" or $password != "123") )
+        {
+            header('HTTP/1.0 401 Unauthorized');
+            header('HTTP/1.1 401 Unauthorized');
+            header('WWW-Authenticate: Basic realm="Lyrics BOX"');
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
+	/**
+    * @ignore
+    */
+    private function checktag($data)
+    {
+        $etagHeader = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] ) ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
+
+        $tag = md5(serialize($data['datos']));
+
+        header("Etag: ". $tag );
+
+        if( $tag === $etagHeader)
+        {
+            header( "HTTP/1.1 304 Not Modified" );
+            $data['datos'] = "";
+        }
+    }
+
+        /**
 	  * Devuelve una lista de los usuarios existentes
       * @param string $campo campo por el cual ordenar - OPCIONAL
       * @param string $orden ordenamiento (ASCendente|DESCendente) - OPCIONAL
@@ -24,16 +78,27 @@ class Usuario extends CI_Controller {
 	
 	public function index() //muestra datos de todos los usuarios - se puede filtrar para traer mejores N puntajes
 	{
-        $ordpor = $this->input->get('campo');
-        $ordtipo = $this->input->get('orden');
-        $mejores = $this->input->get('limite');
+        if( $this->validador()  )
+        {
+            $ordpor = $this->input->get('campo');
+            $ordtipo = $this->input->get('orden');
+            $mejores = $this->input->get('limite');
 
-        if($mejores==null)
-            $mejores = 15;
+            if($mejores==null)
+                $mejores = 15;
 
-        $data['datos'] = $this->usuario_model->get_usuarios($mejores, $ordpor, $ordtipo);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+            $data['datos'] = $this->usuario_model->get_usuarios($mejores, $ordpor, $ordtipo);
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+            else
+            {
+                $this->checktag($data);
+            }
+        }
+		else
+			$data['datos'] = "rechazado";
+
+
         $this->load->view('usuario/index', $data);
 	}
 	
@@ -46,9 +111,15 @@ class Usuario extends CI_Controller {
     
 	public function ver($id) //muestra datos del usuario con ese id
 	{
-        $data['datos'] = $this->usuario_model->get_usuario($id);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+        if( $this->validador()  )
+        {
+            $data['datos'] = $this->usuario_model->get_usuario($id);
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+        }
+		else
+			$data['datos'] = "rechazado";
+
         $this->load->view('usuario/index', $data);
 	}
     
@@ -64,11 +135,21 @@ class Usuario extends CI_Controller {
 	
 	public function verCanciones($id) //todas las canciones subidas de un usuario
 	{
-        $ordpor = $this->input->get('campo');
-        $ordtipo = $this->input->get('orden');
-        $data['datos'] = $this->usuario_model->get_canciones($id, $ordpor, $ordtipo);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+        if( $this->validador()  )
+        {
+            $ordpor = $this->input->get('campo');
+            $ordtipo = $this->input->get('orden');
+            $data['datos'] = $this->usuario_model->get_canciones($id, $ordpor, $ordtipo);
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+            else
+            {
+                $this->checktag($data);
+            }
+        }
+		else
+			$data['datos'] = "rechazado";
+
         $this->load->view('usuario/index', $data);
 	}
     
@@ -84,13 +165,19 @@ class Usuario extends CI_Controller {
 
 	public function agregarUsuario()
 	{
-		$nombre=$this->input->post('nombre'); 
-		$apellido=$this->input->post('apellido');
-		$email=$this->input->post('email');
-		
-		$data['datos'] = $this->usuario_model->guardar($nombre, $apellido, $email);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+        if( $this->validador()  )
+        {
+            $nombre=$this->input->post('nombre'); 
+            $apellido=$this->input->post('apellido');
+            $email=$this->input->post('email');
+            
+            $data['datos'] = $this->usuario_model->guardar($nombre, $apellido, $email);
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+        }
+		else
+			$data['datos'] = "rechazado";
+
         $this->load->view('usuario/index', $data);
 	}	
 
@@ -106,12 +193,22 @@ class Usuario extends CI_Controller {
 
 	public function verJuegos($id) //todos los juegos de un usuario
 	{
-        $ordpor = $this->input->get('campo');
-        $ordtipo = $this->input->get('orden');
-            
-        $data['datos'] = $this->usuario_model->get_juegos($id, $ordpor, $ordtipo);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+        if( $this->validador()  )
+        {
+            $ordpor = $this->input->get('campo');
+            $ordtipo = $this->input->get('orden');
+                
+            $data['datos'] = $this->usuario_model->get_juegos($id, $ordpor, $ordtipo);
+            if( empty($data['datos'])||$data['datos']==null )
+                show_404();
+            else
+            {
+                $this->checktag($data);
+            }
+        }
+		else
+			$data['datos'] = "rechazado";
+
         $this->load->view('usuario/index', $data);
 	}		
 }

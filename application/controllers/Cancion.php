@@ -49,6 +49,22 @@ class Cancion extends CI_Controller {
     }
 
 
+    private function checktag($data)
+    {
+        $etagHeader = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] ) ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
+
+        $tag = md5(serialize($data['datos']));
+
+        header("Etag: ". $tag );
+
+        if( $tag === $etagHeader)
+        {
+            header( "HTTP/1.1 304 Not Modified" );
+            $data['datos'] = "";
+        }
+    }
+
+
       /**
 	  * Este metodo muestra en formato JSON las canciones guardadas en el sistema.
       * @param string $campo campo por el cual ordenar - OPCIONAL
@@ -65,6 +81,10 @@ class Cancion extends CI_Controller {
             $data['datos'] = $this->cancion_model->get_canciones();
             if( empty($data['datos'])||$data['datos']==null )
                 show_404();
+            else
+            {
+                $this->checktag($data);
+            }
         }
         else
         {
@@ -114,15 +134,18 @@ class Cancion extends CI_Controller {
             $data['datos'] = $this->cancion_model->get_fragmentos($id);
             if( empty($data['datos'])||$data['datos']==null )
                 show_404();
-
-            $this->load->view('cancion/index', $data);
+            else
+            {
+                $this->checktag($data);
+            }
+            //$this->load->view('cancion/index', $data);
         }
         else
         {
             $data['datos'] = "Rechazado";
         }
 
-        //$this->load->view('cancion/index', $data);
+        $this->load->view('cancion/index', $data);
 	}
     
     /**

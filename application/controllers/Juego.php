@@ -13,6 +13,42 @@ class Juego extends CI_Controller {
 		$this->load->helper('ssl');
 		force_ssl ();
 	}
+
+	/**
+    * @ignore
+    */
+    private function validador()
+    {
+        $username = null;
+        $password = null;
+
+        // mod_php
+        if (isset($_SERVER['PHP_AUTH_USER'])) {
+            $username = $_SERVER['PHP_AUTH_USER'];
+            $password = $_SERVER['PHP_AUTH_PW'];
+
+        // most other servers
+        } elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+
+            if (strpos(strtolower($_SERVER['HTTP_AUTHORIZATION']),'basic')===0)
+            list($username,$password) = explode(':',base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+
+        }
+
+        if( ($username == null and $password == null) or ($username != "juan" or $password != "123") )
+        {
+            header('HTTP/1.0 401 Unauthorized');
+            header('HTTP/1.1 401 Unauthorized');
+            header('WWW-Authenticate: Basic realm="Lyrics BOX"');
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
 	  /**
 	  * Este metodo muestra en formato JSON los datos (fragmento, cancion, artista, anio, disco) de un nuevo juego creado.
 	  *
@@ -27,15 +63,21 @@ class Juego extends CI_Controller {
 	  */
 	public function index() // devuelve un juego nuevo random (se puede filtrar por artista, año y tag)
 	{
-		$tag=$this->input->post('tag');
-		$anio=$this->input->post('anio');
-		$artista=$this->input->post('artista');
+		if( $this->validador()  )
+        {
+			$tag=$this->input->post('tag');
+			$anio=$this->input->post('anio');
+			$artista=$this->input->post('artista');
+			
+			//if ($tag==null && $anio==null && $artista==null)
+				//show_404();
+			$data['datos'] = $this->juego_model->get_juego($tag, $anio, $artista);
+			if( empty($data['datos'])||$data['datos']==null )
+				show_404();
+		}
+		else
+			$data['datos'] = "rechazado";
 		
-		//if ($tag==null && $anio==null && $artista==null)
-			//show_404();
-		$data['datos'] = $this->juego_model->get_juego($tag, $anio, $artista);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
         $this->load->view('juego/index', $data);
 	}
 		  /**
@@ -52,17 +94,22 @@ class Juego extends CI_Controller {
 	  * @return void
 	  */
 	public function guardar () { //permite subir un juego ya terminado 
-		$idUsuario=$this->input->post('idUsuario');
-		$idFragmento=$this->input->post('idFragmento');
-		$tiempoJuego=$this->input->post('tiempoJuego');
-		$dificultad=$this->input->post('dificultad');
-		if ($idUsuario==null || $idFragmento==null || $tiempoJuego==null || $dificultad==null)
-			show_404();
-		$puntaje = $this->calcularPuntaje ($dificultad, $tiempoJuego); //falta incluir la cantidad de respuestas parciales 
-		
-		$data['datos'] = $this->juego_model->guardar($idUsuario, $idFragmento, $tiempoJuego, $dificultad, $puntaje);
-        if( empty($data['datos'])||$data['datos']==null )
-            show_404();
+		if( $this->validador()  )
+        {
+			$idUsuario=$this->input->post('idUsuario');
+			$idFragmento=$this->input->post('idFragmento');
+			$tiempoJuego=$this->input->post('tiempoJuego');
+			$dificultad=$this->input->post('dificultad');
+			if ($idUsuario==null || $idFragmento==null || $tiempoJuego==null || $dificultad==null)
+				show_404();
+			$puntaje = $this->calcularPuntaje ($dificultad, $tiempoJuego); //falta incluir la cantidad de respuestas parciales 
+			
+			$data['datos'] = $this->juego_model->guardar($idUsuario, $idFragmento, $tiempoJuego, $dificultad, $puntaje);
+			if( empty($data['datos'])||$data['datos']==null )
+				show_404();
+		}
+		else
+			$data['datos'] = "rechazado";
         $this->load->view('juego/index', $data);
 	}
 	/**

@@ -28,6 +28,11 @@
 		public function guardar ($idUsuario, $idFragmento, $tiempoJuego, $dificultad, $puntaje) {
 			$data = array ("codigo_usuario"=>$idUsuario, "codigo_fragmento"=>$idFragmento, "tiempoJuego"=>$tiempoJuego, "dificultad"=>$dificultad, "puntaje"=>$puntaje);
 			$this->db->insert('juego', $data);
+
+			$this->db->set('puntos', 'puntos+'.$puntaje, FALSE);
+			$this->db->where('codigo', $idUsuario);
+			$this->db->update('usuario');
+
 			$query = $this->db->get_where ('juego', $data);
 			return $query->row_array ();
 		}
