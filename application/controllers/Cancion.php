@@ -1,8 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require 'ControladorBase.php';
 
-class Cancion extends CI_Controller {
+class Cancion extends Controlador_Base {
     /**
     * @ignore
     */
@@ -13,67 +14,15 @@ class Cancion extends CI_Controller {
 		force_ssl ();
 	}
 
-
-	/**
-    * @ignore
+    /**
+    * Este metodo muestra en formato JSON las canciones guardadas en el sistema.
+    * @param string $campo campo por el cual ordenar - OPCIONAL
+    * @param string $orden ordenamiento (ASCendente|DESCendente) - OPCIONAL
+    * @param string $filtrar campo por el cual filtrar - OPCIONAL
+    * @param string $valor valor por el cual filtrar (dejar pasar) - OPCIONAL
+    * @api
+    * @return void
     */
-    private function validador()
-    {
-        $username = null;
-        $password = null;
-
-        // mod_php
-        if (isset($_SERVER['PHP_AUTH_USER'])) {
-            $username = $_SERVER['PHP_AUTH_USER'];
-            $password = $_SERVER['PHP_AUTH_PW'];
-
-        // most other servers
-        } elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-
-            if (strpos(strtolower($_SERVER['HTTP_AUTHORIZATION']),'basic')===0)
-            list($username,$password) = explode(':',base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
-
-        }
-
-        if( ($username == null and $password == null) or ($username != "juan" or $password != "123") )
-        {
-            header('HTTP/1.0 401 Unauthorized');
-            header('HTTP/1.1 401 Unauthorized');
-            header('WWW-Authenticate: Basic realm="Lyrics BOX"');
-
-            return false;
-        }
-
-
-        return true;
-    }
-
-
-    private function checktag($data)
-    {
-        $etagHeader = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] ) ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
-
-        $tag = md5(serialize($data['datos']));
-
-        header("Etag: ". $tag );
-
-        if( $tag === $etagHeader)
-        {
-            header( "HTTP/1.1 304 Not Modified" );
-            $data['datos'] = "";
-        }
-    }
-
-
-      /**
-	  * Este metodo muestra en formato JSON las canciones guardadas en el sistema.
-      * @param string $campo campo por el cual ordenar - OPCIONAL
-      * @param string $orden ordenamiento (ASCendente|DESCendente) - OPCIONAL
-      * @param string $filtrar campo por el cual filtrar - OPCIONAL
-      * @param string $valor valor por el cual filtrar (dejar pasar) - OPCIONAL
-      * @api
-	  * @return void
-	  */
 	public function index() //muestra datos de todos las canciones
 	{
         if( $this->validador()  )
@@ -85,13 +34,10 @@ class Cancion extends CI_Controller {
             {
                 $this->checktag($data);
             }
-        }
-        else
-        {
-            $data['datos'] = "Rechazado";
+
+            $this->load->view('cancion/index', $data);
         }
 
-        $this->load->view('cancion/index', $data);
 	}
     
       /**
@@ -108,13 +54,10 @@ class Cancion extends CI_Controller {
             $data['datos'] = $this->cancion_model->get_cancion($id);
             if( empty($data['datos'])||$data['datos']==null )
                 show_404();
-        }
-        else
-        {
-            $data['datos'] = "Rechazado";
-        }
 
-        $this->load->view('cancion/index', $data);
+            $this->load->view('cancion/index', $data);
+        }
+        
 	}
 	
           /**
@@ -138,14 +81,11 @@ class Cancion extends CI_Controller {
             {
                 $this->checktag($data);
             }
+
+            $this->load->view('cancion/index', $data);
             //$this->load->view('cancion/index', $data);
         }
-        else
-        {
-            $data['datos'] = "Rechazado";
-        }
 
-        $this->load->view('cancion/index', $data);
 	}
     
     /**
@@ -204,13 +144,10 @@ class Cancion extends CI_Controller {
             $data['datos'] = $this->cancion_model->guardar($nombre, $anio, $disco, $artista, $fragmentos, $tags, $usuario);
             if( empty($data['datos'])||$data['datos']==null )
                 show_404();
-        }
-        else
-        {
-            $data['datos'] = "Rechazado";
+
+            $this->load->view('cancion/index', $data);
         }
             
-        $this->load->view('cancion/index', $data);
 	}
 }
 ?>

@@ -1,9 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+require 'ControladorBase.php';
   /**
   * Esta clase representa los Juegos
   */
-class Juego extends CI_Controller {
+class Juego extends Controlador_Base {
 	/**
     * @ignore
     */
@@ -13,40 +15,6 @@ class Juego extends CI_Controller {
 		$this->load->helper('ssl');
 		force_ssl ();
 	}
-
-	/**
-    * @ignore
-    */
-    private function validador()
-    {
-        $username = null;
-        $password = null;
-
-        // mod_php
-        if (isset($_SERVER['PHP_AUTH_USER'])) {
-            $username = $_SERVER['PHP_AUTH_USER'];
-            $password = $_SERVER['PHP_AUTH_PW'];
-
-        // most other servers
-        } elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-
-            if (strpos(strtolower($_SERVER['HTTP_AUTHORIZATION']),'basic')===0)
-            list($username,$password) = explode(':',base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
-
-        }
-
-        if( ($username == null and $password == null) or ($username != "juan" or $password != "123") )
-        {
-            header('HTTP/1.0 401 Unauthorized');
-            header('HTTP/1.1 401 Unauthorized');
-            header('WWW-Authenticate: Basic realm="Lyrics BOX"');
-
-            return false;
-        }
-
-
-        return true;
-    }
 
 
 	  /**

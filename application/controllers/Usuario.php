@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Usuario extends CI_Controller {
+require 'ControladorBase.php';
+
+class Usuario extends Controlador_Base {
     
     /**
     * @ignore
@@ -13,59 +15,6 @@ class Usuario extends CI_Controller {
 		force_ssl ();
 	}
     
-
-	/**
-    * @ignore
-    */
-    private function validador()
-    {
-        $username = null;
-        $password = null;
-
-        // mod_php
-        if (isset($_SERVER['PHP_AUTH_USER'])) {
-            $username = $_SERVER['PHP_AUTH_USER'];
-            $password = $_SERVER['PHP_AUTH_PW'];
-
-        // most other servers
-        } elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-
-            if (strpos(strtolower($_SERVER['HTTP_AUTHORIZATION']),'basic')===0)
-            list($username,$password) = explode(':',base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
-
-        }
-
-        if( ($username == null and $password == null) or ($username != "juan" or $password != "123") )
-        {
-            header('HTTP/1.0 401 Unauthorized');
-            header('HTTP/1.1 401 Unauthorized');
-            header('WWW-Authenticate: Basic realm="Lyrics BOX"');
-
-            return false;
-        }
-
-
-        return true;
-    }
-
-
-	/**
-    * @ignore
-    */
-    private function checktag($data)
-    {
-        $etagHeader = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] ) ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
-
-        $tag = md5(serialize($data['datos']));
-
-        header("Etag: ". $tag );
-
-        if( $tag === $etagHeader)
-        {
-            header( "HTTP/1.1 304 Not Modified" );
-            $data['datos'] = "";
-        }
-    }
 
         /**
 	  * Devuelve una lista de los usuarios existentes
@@ -94,12 +43,11 @@ class Usuario extends CI_Controller {
             {
                 $this->checktag($data);
             }
+
+            $this->load->view('usuario/index', $data);
         }
-		else
-			$data['datos'] = "rechazado";
 
 
-        $this->load->view('usuario/index', $data);
 	}
 	
     /**
@@ -116,11 +64,10 @@ class Usuario extends CI_Controller {
             $data['datos'] = $this->usuario_model->get_usuario($id);
             if( empty($data['datos'])||$data['datos']==null )
                 show_404();
+            $this->load->view('usuario/index', $data);
         }
-		else
-			$data['datos'] = "rechazado";
 
-        $this->load->view('usuario/index', $data);
+
 	}
     
     /**
@@ -146,11 +93,9 @@ class Usuario extends CI_Controller {
             {
                 $this->checktag($data);
             }
+            $this->load->view('usuario/index', $data);
         }
-		else
-			$data['datos'] = "rechazado";
 
-        $this->load->view('usuario/index', $data);
 	}
     
         
@@ -174,12 +119,10 @@ class Usuario extends CI_Controller {
             $data['datos'] = $this->usuario_model->guardar($nombre, $apellido, $email);
             if( empty($data['datos'])||$data['datos']==null )
                 show_404();
-        }
-		else
-			$data['datos'] = "rechazado";
 
-        $this->load->view('usuario/index', $data);
-	}	
+            $this->load->view('usuario/index', $data);
+        }
+	}
 
         
     /**
@@ -205,11 +148,10 @@ class Usuario extends CI_Controller {
             {
                 $this->checktag($data);
             }
-        }
-		else
-			$data['datos'] = "rechazado";
 
-        $this->load->view('usuario/index', $data);
+            $this->load->view('usuario/index', $data);
+        }
+
 	}		
 }
 ?>
