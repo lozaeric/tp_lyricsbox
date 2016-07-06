@@ -27,7 +27,7 @@ class Usuario extends Controlador_Base {
 	
 	public function index() //muestra datos de todos los usuarios - se puede filtrar para traer mejores N puntajes
 	{
-        if( $this->validador()  )
+        if( $this->estaAutorizado()  )
         {
             $ordpor = $this->input->get('campo');
             $ordtipo = $this->input->get('orden');
@@ -41,7 +41,7 @@ class Usuario extends Controlador_Base {
                 show_404();
             else
             {
-                $this->checktag($data);
+                $this->chequearTAG($data);
             }
 
             $this->load->view('usuario/index', $data);
@@ -59,7 +59,7 @@ class Usuario extends Controlador_Base {
     
 	public function ver($id) //muestra datos del usuario con ese id
 	{
-        if( $this->validador()  )
+        if( $this->estaAutorizado()  )
         {
             $data['datos'] = $this->usuario_model->get_usuario($id);
             if( empty($data['datos'])||$data['datos']==null )
@@ -82,7 +82,7 @@ class Usuario extends Controlador_Base {
 	
 	public function verCanciones($id) //todas las canciones subidas de un usuario
 	{
-        if( $this->validador()  )
+        if( $this->estaAutorizado()  )
         {
             $ordpor = $this->input->get('campo');
             $ordtipo = $this->input->get('orden');
@@ -91,7 +91,7 @@ class Usuario extends Controlador_Base {
                 show_404();
             else
             {
-                $this->checktag($data);
+                $this->chequearTAG($data);
             }
             $this->load->view('usuario/index', $data);
         }
@@ -110,7 +110,7 @@ class Usuario extends Controlador_Base {
 
 	public function agregarUsuario()
 	{
-        if( $this->validador()  )
+        if( $this->estaAutorizado()  )
         {
             $nombre=$this->input->post('nombre'); 
             $apellido=$this->input->post('apellido');
@@ -136,7 +136,7 @@ class Usuario extends Controlador_Base {
 
 	public function verJuegos($id) //todos los juegos de un usuario
 	{
-        if( $this->validador()  )
+        if( $this->estaAutorizado()  )
         {
             $ordpor = $this->input->get('campo');
             $ordtipo = $this->input->get('orden');
@@ -146,7 +146,7 @@ class Usuario extends Controlador_Base {
                 show_404();
             else
             {
-                $this->checktag($data);
+                $this->chequearTAG($data);
             }
 
             $this->load->view('usuario/index', $data);

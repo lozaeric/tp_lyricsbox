@@ -22,7 +22,7 @@ class Controlador_Base extends CI_Controller {
         /**
         * @ignore
         */
-        protected function validador()
+        protected function estaAutorizado()
         {
             $username = null;
             $password = null;
@@ -56,7 +56,7 @@ class Controlador_Base extends CI_Controller {
         /**
         * @ignore
         */
-        protected function checktag($data)
+        protected function chequearTag($data)
         {
             $etagHeader = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] ) ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
 

@@ -53,7 +53,11 @@
             $this->db->from('USUARIO');
             $this->db->where('codigo', $id);
 
-            return $this->db->get()->row_array();
+            $fila = $this->db->get()->row_array();
+
+            $fila['canciones'] = $this->get_canciones($id);
+
+            return $fila;
 		}
 		
 		public function get_canciones ($id, $ordpor=null, $ordtipo=null) {
@@ -68,11 +72,12 @@
             //$this->db->join('USUARIO', 'USUARIO.codigo = CANCION.codigo');
             $this->db->where('FRAGMENTO.codigo_usuario', $id);
             $this->db->group_by('CANCION.codigo');
-            $this->db->order_by('FRAGMENTO.tiempo', 'DESC');
             $this->db->limit($limitar);
             
             if($ordpor != null && $ordtipo != null)
                 $this->db->order_by( $ordpor, $ordtipo );
+            else
+                $this->db->order_by('FRAGMENTO.tiempo', 'DESC');
 
             
             return $this->db->get()->result_array();

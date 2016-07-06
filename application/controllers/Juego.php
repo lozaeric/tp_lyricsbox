@@ -31,7 +31,7 @@ class Juego extends Controlador_Base {
 	  */
 	public function index() // devuelve un juego nuevo random (se puede filtrar por artista, año y tag)
 	{
-		if( $this->validador()  )
+		if( $this->estaAutorizado()  )
         {
 			$tag=$this->input->post('tag');
 			$anio=$this->input->post('anio');
@@ -42,11 +42,10 @@ class Juego extends Controlador_Base {
 			$data['datos'] = $this->juego_model->get_juego($tag, $anio, $artista);
 			if( empty($data['datos'])||$data['datos']==null )
 				show_404();
+				
+        	$this->load->view('juego/index', $data);
 		}
-		else
-			$data['datos'] = "rechazado";
 		
-        $this->load->view('juego/index', $data);
 	}
 		  /**
 	  * Este metodo guarda un juego y despues muestra en formato JSON sus datos (idUsuario, idFragmento, tiempo, dificultad, puntaje, tiempoJuego).
@@ -62,7 +61,7 @@ class Juego extends Controlador_Base {
 	  * @return void
 	  */
 	public function guardar () { //permite subir un juego ya terminado 
-		if( $this->validador()  )
+		if( $this->estaAutorizado()  )
         {
 			$idUsuario=$this->input->post('idUsuario');
 			$idFragmento=$this->input->post('idFragmento');
@@ -75,10 +74,10 @@ class Juego extends Controlador_Base {
 			$data['datos'] = $this->juego_model->guardar($idUsuario, $idFragmento, $tiempoJuego, $dificultad, $puntaje);
 			if( empty($data['datos'])||$data['datos']==null )
 				show_404();
+
+			$this->load->view('juego/index', $data);
 		}
-		else
-			$data['datos'] = "rechazado";
-        $this->load->view('juego/index', $data);
+
 	}
 	/**
     * @ignore

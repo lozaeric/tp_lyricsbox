@@ -25,14 +25,14 @@ class Cancion extends Controlador_Base {
     */
 	public function index() //muestra datos de todos las canciones
 	{
-        if( $this->validador()  )
+        if( $this->estaAutorizado()  )
         {
             $data['datos'] = $this->cancion_model->get_canciones();
             if( empty($data['datos'])||$data['datos']==null )
                 show_404();
             else
             {
-                $this->checktag($data);
+                $this->chequearTAG($data);
             }
 
             $this->load->view('cancion/index', $data);
@@ -49,7 +49,7 @@ class Cancion extends Controlador_Base {
 	
 	public function ver($id) //muestra la cancion id
 	{
-        if( $this->validador() )
+        if( $this->estaAutorizado() )
         {
             $data['datos'] = $this->cancion_model->get_cancion($id);
             if( empty($data['datos'])||$data['datos']==null )
@@ -72,14 +72,14 @@ class Cancion extends Controlador_Base {
     
 	public function verFragmentos ($id)  //devuelve los fragmentos de la cancion id
     {
-        if( $this->validador() )
+        if( $this->estaAutorizado() )
         {
             $data['datos'] = $this->cancion_model->get_fragmentos($id);
             if( empty($data['datos'])||$data['datos']==null )
                 show_404();
             else
             {
-                $this->checktag($data);
+                $this->chequearTAG($data);
             }
 
             $this->load->view('cancion/index', $data);
@@ -130,7 +130,7 @@ class Cancion extends Controlador_Base {
 	
 	public function guardar ()  //guarda una nueva cancion subida por un usuario
     {
-        if( $this->validador() )
+        if( $this->estaAutorizado() )
         {
             $nombre=$this->input->post('nombre'); 
             $anio=$this->input->post('anio');
