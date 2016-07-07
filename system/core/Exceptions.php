@@ -154,7 +154,7 @@ class CI_Exceptions {
 	 *
 	 * @return	string	Error page output
 	 */
-	public function show_error($heading, $message, $template = 'error_general', $status_code = 500)
+	public function show_errorx($heading, $message, $template = 'error_general', $status_code = 500)
 	{
 		$templates_path = config_item('error_views_path');
 		if (empty($templates_path))
@@ -183,6 +183,23 @@ class CI_Exceptions {
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		return $buffer;
+	}
+
+	public function show_error($heading, $message, $template = 'error_general', $status_code = 500)
+	{
+		header('Cache-Control: no-cache, must-revalidate');
+		header('Content-type: application/json');
+		header("HTTP/1.1 404 Not Found");
+
+		echo json_encode(
+			array(
+				'status' => FALSE,
+				'error' => 'Not Found',
+				'message' => $message
+			)
+		);
+
+		exit;
 	}
 
 	// --------------------------------------------------------------------

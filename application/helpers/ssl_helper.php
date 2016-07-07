@@ -4,7 +4,7 @@ if (!function_exists('force_ssl'))
 {
     function force_ssl()
     {
-        $CI =& get_instance();
+        /*$CI =& get_instance();
         $CI->load->helper('url');
         $CI->config->config['base_url'] =
                  str_replace('http://', 'https://',
@@ -12,7 +12,7 @@ if (!function_exists('force_ssl'))
         if ($_SERVER['SERVER_PORT'] != 443)
         {
             redirect($CI->uri->uri_string());
-        }
+        }*/
    }
 }
 

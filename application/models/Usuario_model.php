@@ -55,7 +55,8 @@
 
             $fila = $this->db->get()->row_array();
 
-            $fila['canciones'] = $this->get_canciones($id);
+            if($fila != null)
+                $fila['canciones'] = $this->get_canciones($id);
 
             return $fila;
 		}
