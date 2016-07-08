@@ -28,10 +28,6 @@ require_once(__DIR__.'/../CITestCase.php');
             $response = $this->client->get('canciones', [
                 'auth' => [
                     'juan', '123'
-                ],
-
-                'auth' => [
-                    'juan', '123'
                 ]
             ]);
 
